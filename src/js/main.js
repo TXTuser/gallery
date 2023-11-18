@@ -1,10 +1,8 @@
 import { db } from "./db.js";
 let parent = document.getElementsByClassName("container")[0];
-let openPopUp = document.getElementById("openPopUp");
 let popUp = document.getElementById("PopUp");
-let closePopUp = document.getElementById("PopUpClose");
 
-for (let i = 0; i < db.length; i++) {
+for (let i = 0; i < db.length; ++i) {
   let card = `
   <div class="card">
   <img src="${db[i].img}" alt="">
@@ -26,11 +24,21 @@ for (let i = 0; i < db.length; i++) {
   parent.innerHTML = parent.innerHTML + card;
 }
 
-openPopUp.addEventListener("click", function (e) {
+for (let b of document.getElementsByClassName("open_pop_up")) {
+  b.onclick = (event) => openModal(event);
+}
+
+for (let b of document.getElementsByClassName("pop_up_close")) {
+  b.onclick = (event) => closeModal(event);
+}
+
+function openModal(e) {
   e.preventDefault();
   popUp.classList.add("active");
-});
+  popUpImg.src = `${e.target.parentNode.parentNode.parentNode.parentNode.children[0].src}`;
+}
 
-closePopUp.addEventListener("click", () => {
+function closeModal(e) {
+  e.preventDefault();
   popUp.classList.remove("active");
-});
+}
